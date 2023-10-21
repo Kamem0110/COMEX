@@ -68,3 +68,5 @@ echo "E-mail: " . $cliente2412->getEmail() . PHP_EOL;
 echo "Número do celular: " . $cliente2412->getCelular() . PHP_EOL;
 echo "Endereço: " . $cliente2412->getEndereco() . PHP_EOL;
 
+//echo "Endereço: " . $cliente2412->getEndereco() . PHP_EOL;
+
