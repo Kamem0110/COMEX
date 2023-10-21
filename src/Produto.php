@@ -46,3 +46,6 @@ echo "Produto: " . $frango1->getNomeProduto() . PHP_EOL;
 echo "Preço: " . $frango1->getPreco() . PHP_EOL;
 echo "Estoque: " . $frango1->getEstoque() . PHP_EOL;
 
+//echo "Estoque: " . $frango1->getEstoque() . PHP_EOL;
+
+
