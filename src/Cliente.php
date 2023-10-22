@@ -1,4 +1,8 @@
 <?php
+//Atributo de pedidos do cliente
+require_once 'Pedido.php';
+require_once 'Produto.php';
+require_once 'Carrinho.php';
 
 class Cliente
 {
@@ -7,6 +11,7 @@ class Cliente
     public string $email;
     public string $celular;
     public string $endereco;
+    public array $pedido=[];
 
     public function __construct($nomeCliente, $email,$celular,$endereco){
         $this->setNome($nomeCliente);
@@ -59,6 +64,16 @@ class Cliente
         $this->endereco = $endereco;
     }
 
+    public function getPedido(): array
+    {
+        return $this->pedido;
+    }
+
+    public function novoPedido(Pedido $pedido)
+    {
+        $this->pedido[] = $pedido;
+    }
+
 }
 
 $cliente2412 = new Cliente("Pedro Giusti","pedrogiusti@email.com","19895623142","Rual Tal, 1234");
@@ -67,6 +82,16 @@ echo "Cliente: " . $cliente2412->getNome() . PHP_EOL;
 echo "E-mail: " . $cliente2412->getEmail() . PHP_EOL;
 echo "Número do celular: " . $cliente2412->getCelular() . PHP_EOL;
 echo "Endereço: " . $cliente2412->getEndereco() . PHP_EOL;
+echo "\n";
+echo "\n";
 
-//echo "Endereço: " . $cliente2412->getEndereco() . PHP_EOL;
+//Atributo de pedidos do cliente
+$cliente21 = new Cliente("Ricardo", "ricardo@facebook.com", "19857496521","Rua da Cruz, 1526");
+$pedido2413 = new Pedido(2413, $cliente2412->getNome(), "Pizza");
+$cliente21->novoPedido($pedido2413);
+echo "Nome do cliente: " . $cliente21->getNome() . "\n";
+echo "Pedido: " . $pedido2413->produto . "\n";
 
+//Carrinho de supermercado
+$carrinho1 = new CarrinhoDeCompras();
+$carrinho1->carrinhoProduto();

@@ -36,6 +36,16 @@ class Pedido {
     {
         $this->produto = $produto;
     }
+
+    public function getPedidos(): array
+    {
+        return $this->pedido;
+    }
+
+    public function adicionarPedido(Pedido $pedido)
+    {
+        $this->pedido = $pedido;
+    }
 }
 
 $pedido1010 = new Pedido(1010, "Pedro Gisuti","X-Tudo");
