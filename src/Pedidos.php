@@ -1,6 +1,9 @@
 <?php
 
-require_once "Classes\Pedido.php";
+use Pedro\Comex\Classes\Pagamento\Pedido;
+
+require_once 'Classes\Pagamento\Pedido.php';
+require_once 'Classes\Pagamento\Produto.php';
 
 $pedido1010 = new Pedido(1010, "Pedro Gisuti","X-Tudo");
 echo "Número: " . $pedido1010->getID() . "\n";
