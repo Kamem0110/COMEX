@@ -1,11 +1,13 @@
 <?php
 
-namespace Pedro\Comex\Exceptions;
+namespace Pedro\Comex\Classes;
 
-class EstoqueInsuficienteException extends Exception
+class EstoqueInsuficienteException extends \DomainException
 {
-    public function __construct()
-    {
-        parent::__construct("Não tem espaço no estoque.");
-    }
+    public function __construct(float $quantidade, float $disponivel)
+{
+    $mensagem = "Você tentou retirar  do estoque  $quantidade, mas há  $disponivel unidades em disponiveis em estoque.";
+    parent::__construct($mensagem);
+}
+
 }
