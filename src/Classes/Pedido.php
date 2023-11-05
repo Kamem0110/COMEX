@@ -44,6 +44,11 @@ class Pedido
         return $this->statusPagamento;
     }
 
+    public function pagar()
+    {
+        $this->statusPagamento = $this->meioDePagamento->processoPagamento();
+    }
+
     public function getValorTotal()
     {
         $total = 0;
@@ -55,14 +60,9 @@ class Pedido
         return $total;
     }
 
-    public function pagar()
+    public function adicionarProduto(Produto $produto)
     {
-        $this->statusPagamento = $this->meioDePagamento->processoPagamento();
-    }
-
-    public function adicionarPedido(Pedido $pedido)
-    {
-        $this->pedido = $pedido;
+        array_push($this->produtos, $produto);
     }
 }
 

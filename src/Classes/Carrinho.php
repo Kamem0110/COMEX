@@ -8,7 +8,7 @@ require_once 'EstoqueInsuficienteException.php';
 
 class Carrinho
 {
-    private Produto $produtos;
+    private Produto $produto;
     public function __construct(Produto $produto)
     {
         $this->produto = $produto;
@@ -33,6 +33,10 @@ class Carrinho
     {
         //Compras maior que 100
         return $this->getValorCompra() >= 100 ? 0 : 9.99;
+    }
 
+    public function getValorTotal()
+    {
+        return $this->getValorCompra() + $this->getValorFrete();
     }
 }

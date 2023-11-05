@@ -4,31 +4,36 @@ namespace Pedro\Comex;
 
 use Pedro\Comex\Exception\EstoqueInsuficienteException;
 use Pedro\Comex\Exception\PagamentoProblemaException;
+use PHPUnit\Event\Runtime\PHP;
 
 
 class Produto
 {
     private string $nomeProduto;
-    private  float $preco;
-    private float $estoque;
+    private float $preco;
+    private float $estoque = 0;
 
-    public function __construct(string $nomeProduto, float $preco, float $estoque)
+    private float $desconto;
+
+    public function __construct(string $nomeProduto, float $preco, float $estoque, float $desconto)
     {
-        $this->nome = $nomeProduto;
+        $this->nomeProduto = $nomeProduto;
         $this->preco = $preco;
         $this->estoque = $estoque;
+        $this->desconto = $desconto;
 
     }
 
-    public function atualizarNome(string $nome)
+    public function getNome()
     {
-        $this->nome = $nome;
+        return $this->nomeProduto;
 
     }
 
-    public function atualizarPreco(float $preco)
+    public function getPreco()
     {
-        try {
+        return $this->preco - ($this->preco * $this->desconto);
+        /*try {
             if ($preco <= 0) {
                 throw new \InvalidArgumentException('Valor incorreto');
             }
@@ -36,65 +41,56 @@ class Produto
         } catch (\Exception $erro) {
             echo $erro->getMessage() . PHP_EOL;
             return;
-        }
+        }*/
     }
 
-    public function atualizarEstoque(float $estoque)
-    {
-        try {
-            if ($estoque <= 0) {
-                throw new \InvalidArgumentException('Valor incorreto.');
-            }
-        } catch (\Exception $erro) {
-            echo $erro->getMessage() . PHP_EOL;
-            return;
-        }
-        $this->qtdEstoque = $estoque;
-    }
-
-    public function recuperarNome(): string
-    {
-        return $this->nomeProduto;
-    }
-
-    public function recuperarPreco(): float
+    public function getPrecoBase()
     {
         return $this->preco;
     }
 
-    public function recuperarEstoque(): float
+    public function getEstoque()
     {
+
         return $this->estoque;
     }
 
-    public function reduzirEstoque(float $estoqueReduzir): void
+    public function getValorTotalEmEstoque()
     {
-        try {
-            if ($estoqueReduzir < 0) {
-                throw new \InvalidArgumentException('A quantidade a reduzir não pode ser negativa.');
-            }
-
-            if ($estoqueReduzir > $this->estoque) {
-                throw new EstoqueInsuficienteException($estoqueReduzir,$this->estoque);
-            }
-        } catch (\Exception $erro) {
-            echo $erro->getMessage().PHP_EOL;
-            return;
-        }
-        $this->estoque -= $estoqueReduzir;
+        return $this->estoque * $this->preco;
     }
 
-    public function incrementarEtoque(float $valor): void
+    public function setPreco(float $valor)
+    {
+        $this->preco = $valor;
+    }
+
+    public function compra(int $quantidade = 1)
     {
         try {
-            if ($valor < 0) {
-                throw new \InvalidArgumentException('A quantidade não pode ser negativa.');
+            if ($quantidade <= 0)
+            {
+                throw new \InvalidArgumentException("A quantidade de compra não pode ser negativa.");
+            }
+            if ($quantidade > $this->estoque)
+            {
+                throw new \Pedro\Comex\Classes\EstoqueInsuficienteException($this->estoque);
             }
         } catch (\Exception $erro) {
             echo $erro->getMessage() . PHP_EOL;
             return;
         }
-        $this->estoque += $valor;
+        $this->estoque -= $quantidade;
+
+    }
+
+    public function repoe(int $quantidade = 1)
+    {
+       if ($quantidade <= 0) {
+                throw new \InvalidArgumentException("A quantidade de compra não pode ser negativa.");
+            }
+
+        $this->estoque +=$quantidade;
     }
 
     public function listarDisponivel(): void

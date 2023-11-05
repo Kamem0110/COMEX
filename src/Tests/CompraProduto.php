@@ -4,6 +4,14 @@ require_once "Classes\Produto.php";
 
 
 $frango1 = new Produto("Frango", 49.89, 326);
+
+try {
+    $frango1->compra(1000);
+} catch (\Exception $erro) {
+    echo $erro->getMessage() . PHP_EOL;
+    return;
+}
+
 $pizza1 = new Produto("Pizza/Un", 42.99, 50);
 $maca1 = new Produto("Maçã/KG", 89.9, 200);
 $pao1 = new Produto("Pão frances/Kg", 29.19, 100);
